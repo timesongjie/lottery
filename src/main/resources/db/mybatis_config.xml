@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	
 	<settings>
 		<setting name="cacheEnabled" value="true" />
 		<setting name="lazyLoadingEnabled" value="true" />
@@ -16,9 +17,10 @@
 		<setting name="jdbcTypeForNull" value="OTHER" />
 		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
 	</settings>
-	
-	<typeHandlers>
-		<package name="com.bbkmobile.iqoo"/>
-	</typeHandlers>
-	
+	<typeAliases> 
+        <typeAlias alias="appInfo" type="com.bbkmobile.iqoo.interfaces.lottery.vo.AppInfo"/> 
+        <typeAlias alias="lotteryRecord" type="com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryRecord"/> 
+        <typeAlias alias="lotteryDownloadRecord" type="com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryDownloadRecord"/>
+        <typeAlias alias="lotteryClickRecord" type="com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryClickRecord"/>
+    </typeAliases> 
 </configuration>   
