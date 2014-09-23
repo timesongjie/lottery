@@ -1,0 +1,184 @@
+* {
+	margin-top: 0;
+	padding: 0
+}
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+	font: inherit;
+	font-size: 100%
+}
+
+html {
+	line-height: 1
+}
+
+ol,ul {
+	list-style: none
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0
+}
+
+caption,th,td {
+	vertical-align: middle;
+	text-align: left;
+	font-weight: normal
+}
+
+q,blockquote {
+	quotes: none
+}
+
+q:before,q:after,blockquote:before,blockquote:after {
+	content: "";
+	content: none
+}
+
+a img {
+	border: 0
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary {
+	display: block
+}
+
+body {
+	background: #f4f4f4;
+	color: #565656;
+	font-size: 12px;
+	font-family: "Droid Sans Fallback" "Rounded MT Bold",tahoma,Arial,"\5B8B\4F53",sans-serif;
+	line-height: 1.6;
+	-webkit-tap-highlight-color: rgba(0,0,0,0)
+}
+
+a {
+	color: #333;
+	text-decoration: none
+}
+
+input {
+	margin: 0;
+	padding: 0;
+	outline: 0;
+	border: 0;
+	vertical-align: middle;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-appearance: none
+}
+.banner-main{
+	/*border: solid 1px blue;*/
+}
+.banner-main img{
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+
+.roll-box,.examine,.draw,.count{
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	-ms-border-radius:5px;
+	-o-border-radius:5px;
+	border-radius:5px;
+}
+
+/*---------------------------------------------------------------------------------*/
+.main-bg{
+	/*height: 300px;*/
+	background: #ffcc01;
+	padding-top: 1px;
+
+}
+.roll-bg{
+	/*border: solid 1px green;*/
+	height: 30px;
+	display: -webkit-box;
+	margin-top:30px;
+}
+.roll-box{
+	border: solid 1px #c91b1d;
+	/*width: 70%;*/
+	height: 28px;
+	margin:0 10px;
+	-webkit-box-flex:1;
+	color: #c91b1d;
+	font-size: 16px;
+	line-height: 28px;
+	padding: 0 5px;
+}
+.examine{
+	/*width: 25%;*/
+	border: solid 1px #c91b1d;
+	background: #c91b1d;
+	/*width: 200px;*/
+	height: 28px;
+	padding: 0 10px;
+	color: #fff;
+	font-size: 16px;
+	line-height: 28px;
+	-webkit-box-flex:0;
+	margin-right:10px;
+}
+
+/*----------------------------------------------------------------------------------*/
+.big-box{
+	/*border: solid 1px blue;*/
+	text-align: center;
+	width: 320px;
+	height: 320px;
+	margin: 30px auto;
+	position: relative;
+}
+.big-box img{
+	width: 100%;
+	height: auto;
+}
+.small-box{
+	/*border: solid 1px red;*/
+	position: absolute;
+	left:110px;
+	bottom: 110px;
+	width: 100px;
+	height: 107px;
+
+
+}
+/*-------------------------------------------------------------------------------------*/
+
+
+.draw{
+	width: 35%;
+	margin: 0 auto;
+	text-align: center;
+	background: url(../images/draw-bg.png) repeat-x left -10px;
+}
+.count{
+	width: 95%;
+	margin: 20px auto;
+	background: #fff;
+}
+.draw,.count{
+	height: 40px;
+	line-height: 40px;
+	border: solid 1px #896124;
+	text-align: center;
+	font-size: 18px;
+	color: #896124;
+}
+/*--------------------------------------------------------------------------------------*/
+.wave{
+	width: 100%;
+	height: 15px;
+	background: #fcf7d9 url(../images/wave.jpg) repeat-x;
+}
+.app-bg{
+	height: 300px;
+	background: #fcf7d9;
+}
