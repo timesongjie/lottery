@@ -18,22 +18,29 @@ public class LotteryDAOImpl implements LotteryDAO{
     
     @Override
     public List<LotteryRecord> list() throws Exception {
-        return session.selectList("selectLotteryRecords");
+        return session.selectList("lotteryMapper.selectLotteryRecords");
     }
 
     @Override
     public void addLotteryRecords(List<LotteryRecord> records) throws Exception {
-        
+        if(records != null && records.size() >0){
+            for(LotteryRecord record : records){
+                session.insert("lotteryMapper.addLotteryRecords", record);
+            }
+        }
     }
 
     @Override
     public void addLotteryDownloadRecords(LotteryDownloadRecord record)
             throws Exception {
+        if(record != null){
+            session.insert("");
+        }
     }
 
     @Override
     public int countUserDownloads(String userId) throws Exception {
-        return 0;
+        return session.selectOne("");
     }
 
 }
