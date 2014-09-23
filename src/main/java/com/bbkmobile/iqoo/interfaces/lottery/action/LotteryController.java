@@ -1,9 +1,8 @@
 package com.bbkmobile.iqoo.interfaces.lottery.action;
 
-import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,8 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bbkmobile.iqoo.common.json.JsonParser;
+import com.bbkmobile.iqoo.common.json.ResultObject;
 import com.bbkmobile.iqoo.common.net.HttpsURLConnectionUtil;
 import com.bbkmobile.iqoo.interfaces.lottery.business.AppInfoService;
+import com.bbkmobile.iqoo.interfaces.lottery.business.LotteryService;
+import com.bbkmobile.iqoo.interfaces.lottery.vo.LoginResult;
+import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryDownloadRecord;
+import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryRecord;
 import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryUserInfo;
 
 @Controller
@@ -27,10 +31,15 @@ public class LotteryController {
     private final static String LOGIN_URL = "https://usrsys.inner.bbk.com/v2/login?locale=zh_CN";
     @Resource
     private AppInfoService iAppInfoService;
+    @Resource
+    private LotteryService lotteryServiceImpl;
+
     private final String SessionTag = "loginUser";
 
     @RequestMapping("/login")
-    public void login(HttpServletRequest request,HttpServletResponse response) {
+    public LoginResult login(HttpServletRequest request, HttpServletResponse response) {
+        String name = null;
+        LoginResult result = new LoginResult();
         try {
             String account = request.getParameter("account");
             String password = request.getParameter("password");
@@ -38,12 +47,11 @@ public class LotteryController {
                     LOGIN_URL + "&account=" + account + "&pwd=" + password);
 
             JSONObject object = JSONObject.fromObject(responseStr);
-            String name = null;
-            String temp = null;
+           
             if ("200".equals(object.getString("stat"))) {
                 HttpSession session = request.getSession();
-                LotteryUserInfo userInfo = JsonParser.readJSON2Bean(responseStr,
-                        LotteryUserInfo.class);
+                LotteryUserInfo userInfo = JsonParser.readJSON2Bean(
+                        responseStr, LotteryUserInfo.class);
                 session.setAttribute(SessionTag, userInfo);
                 if (userInfo != null) {
                     if (userInfo.getName() != null
@@ -57,19 +65,18 @@ public class LotteryController {
                         name = userInfo.getPhonenum();
                     }
                 }
-                temp = "{\"stat\":\"200\", \"msg\":\"登录成功\", \"name\": \""
-                        + name + "\"}";
+                result.setStat("200");
+                result.setMessage("登录成功");
+                result.setUserName(name);
             } else {
-                temp = "{\"stat\":\"500\", \"msg\":\"登录失败\"}";
+                result.setStat("500");
+                result.setMessage("登录失败");
             }
-            outwrite(temp, "text/json",response);
         } catch (Exception e) {
-            String temp = "{\"stat\":\"500\", \"msg\":\"登录失败\"}";
-            try {
-                outwrite(temp, "text/json",response);
-            } catch (Exception e1) {
-            }
+            result.setStat("500");
+            result.setMessage("登录失败");
         }
+        return result;
     }
 
     public String lottery() {
@@ -81,58 +88,50 @@ public class LotteryController {
     }
 
     @RequestMapping("/downloadApkFile")
-    public String download(HttpServletRequest request,HttpServletResponse response) {
+    public String download(HttpServletRequest request,
+            HttpServletResponse response) {
         try {
             HttpSession session = request.getSession();
             LotteryUserInfo userInfo = session.getAttribute(SessionTag) != null ? (LotteryUserInfo) session
                     .getAttribute(SessionTag) : null;
-            //if (userInfo != null) {
+            if (userInfo != null) {
                 String app_id = request.getParameter("id");
 
                 String model = request.getParameter("model");
                 String appVersion = request.getParameter("appVersion");
                 boolean isFirst = true; // 是否为断点续传
                 String patch = request.getParameter("patch");
+                
 
-                // TODO 添加下载记录
+                //添加下载记录
+                LotteryDownloadRecord record = new LotteryDownloadRecord();
+                record.setAppId(app_id);
+                record.setUserId(String.valueOf(userInfo.getId()));
+                lotteryServiceImpl.addLotteryDownloadRecord(record);
+                
                 String filePath = iAppInfoService.getApkFilePath(app_id,
                         appVersion, isFirst, "local", patch, model);
                 response.sendRedirect(filePath);
-         /*   } else {
+            } else {
                 // TODO 跳转到首页
-            }*/
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    public void outwrite(String content, String contentType,HttpServletResponse response) throws Exception {
 
-        ServletOutputStream out = null;
+    @RequestMapping("/records")
+    public ResultObject<List<LotteryRecord>> lotteryRecords(){
         try {
-            response.setContentType(contentType);
-            byte[] contentBytes = content.getBytes("utf-8");
-            response.setContentLength(contentBytes.length);
-            // response.setHeader("Cache-Control", "no-cache");
-
-            out = response.getOutputStream();
-            out.write(contentBytes);
-
-            out.flush();
-            out.close();
-
-        } catch (IOException e) {
-            throw e;
+            List<LotteryRecord> list = lotteryServiceImpl.getTop10Records();
+            ResultObject<List<LotteryRecord>> result = new ResultObject<List<LotteryRecord>>();
+            result.setResult(true);
+            result.setValue(list);
+            return result;
         } catch (Exception e) {
-            throw e;
-        } finally {
-            if (null != out) {
-                out.close();
-            }
+            e.printStackTrace();
         }
-    }
-    public static void main(String[] args) {
-        String temp = "{\"stat\":\"200\", \"msg\":\"登录成功\", \"name\": \"\", \"email\": \"\", \"phonenum\": \"13172481328\"}";
-        System.out.println(temp);
+        return null;
     }
 }

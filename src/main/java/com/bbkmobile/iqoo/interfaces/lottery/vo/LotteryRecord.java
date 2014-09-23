@@ -20,7 +20,7 @@ public class LotteryRecord {
     private String userId;
     private Date lottery_date;
     private String sn;   // 中奖编号
-    private Integer grade;// 几等奖
+    private Integer lottery_grade;// 几等奖
 
     public Integer getId() {
         return id;
@@ -54,12 +54,11 @@ public class LotteryRecord {
         this.sn = sn;
     }
 
-    public Integer getGrade() {
-        return grade;
+    public Integer getLottery_grade() {
+        return lottery_grade;
     }
 
-    public void setGrade(Integer grade) {
-        this.grade = grade;
+    public void setLottery_grade(Integer lottery_grade) {
+        this.lottery_grade = lottery_grade;
     }
-
 }

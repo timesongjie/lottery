@@ -14,12 +14,12 @@
 		values(#{userId},#{lottery_date},#{sn},#{lottery_grade})
 	</insert>
 
-	<select id="selectLotteryRecords" resultType="lotteryRecord">
-		select * from t_lottery_record order by lottery_grade limit 0,10
+	<select id="addLotteryDownloadRecord" resultType="lotteryDownloadRecord">
+		insert into t_lottery_download(userId,app_id)
+		values(#{userId},#{appId})
 	</select>
 
-	<insert id="addLotteryRecords" parameterType="lotteryRecord">
-		insert into t_lottery_record(userId,lottery_date,sn,lottery_grade)
-		values(1111,'2014-10-01','ffffffff',1)
+	<insert id="countUserDownloadRecord" parameterType="string">
+		select count(*) from t_lottery_download where userId = #{userId}
 	</insert>
 </mapper>
