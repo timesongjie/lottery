@@ -1,5 +1,6 @@
 package com.bbkmobile.iqoo.interfaces.lottery.action;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,10 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bbkmobile.iqoo.common.UUIDGenerator;
 import com.bbkmobile.iqoo.common.json.JsonParser;
 import com.bbkmobile.iqoo.common.json.ResultObject;
+import com.bbkmobile.iqoo.common.lottery.Lottery;
 import com.bbkmobile.iqoo.common.net.HttpsURLConnectionUtil;
 import com.bbkmobile.iqoo.interfaces.lottery.business.AppInfoService;
 import com.bbkmobile.iqoo.interfaces.lottery.business.LotteryService;
@@ -33,7 +36,8 @@ public class LotteryController {
     private AppInfoService iAppInfoService;
     @Resource
     private LotteryService lotteryServiceImpl;
-
+    
+    
     private final String SessionTag = "loginUser";
 
     @RequestMapping("/login")
@@ -78,12 +82,33 @@ public class LotteryController {
         }
         return result;
     }
-
-    public String lottery() {
-        // 1.过滤
-        // 2.抽奖
-        // 3.返回
-        // 4.保存中奖信息
+    @RequestMapping("/lottery")
+    public LotteryRecord lottery(HttpServletRequest request, HttpServletResponse response) {
+        // 抽奖
+        try {
+            HttpSession session = request.getSession();
+            LotteryUserInfo userInfo = session.getAttribute(SessionTag) != null ? (LotteryUserInfo) session
+                    .getAttribute(SessionTag) : null;
+            LotteryRecord record = null;
+            //if (userInfo != null) {
+                Lottery lottery = null;
+                lottery = lotteryServiceImpl.lottery(1);
+                if(lottery != Lottery.NONLOTTERY){
+                    //生成唯一SN码
+                    lottery.setSn(UUIDGenerator.getUUID());
+                }
+                //生成记录
+                record =  new LotteryRecord();
+                //record.setUserId(String.valueOf(userInfo.getId()));
+                record.setLottery_grade(lottery.getGrand());
+                record.setSn(lottery.getSn());
+                record.setLottery_date(new Date());
+            //}
+            return record;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 保存中奖信息
         return null;
     }
 
