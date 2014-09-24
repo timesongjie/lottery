@@ -2,29 +2,31 @@
     // 单行滚动
 	function AutoScroll(obj){
 	    $(obj).find("ul").animate({
-	        marginTop:"-60px"
+	        marginTop:"-28px"
 	    },500,function(){    
 	        $(this).css({marginTop:"0px"}).find("li:first").appendTo(this);
 	    });
 	}
 
-	$(document).ready(function(){
-	    setInterval('AutoScroll("#box")',2000) 
+	/*$(document).ready(function(){
+	    setInterval('AutoScroll(".roll-box")',2000) 
 	});
-
+*/
 
 $(function(){
+	setInterval('AutoScroll(".roll-box")',2000) 
 	$("*").bind('touchstart', function(event){});
+	
 	var rotateFunc = function(awards,angle,text){  
-		$(".rotate-bg").rotate({
+		$("#lotteryBtn").rotate({
 			angle:30, 
 			duration: 3000, 
 			animateTo: angle+1440, 
 			callback:function(){ 
 				if (prize==0) {
-					$(".weizhongjiang").text(text);
+					// $(".weizhongjiang").text(text);
 				} else{
-					$(".zhongjiang").text(text);
+					// $(".zhongjiang").text(text);
 				};
 			
 			}
@@ -47,20 +49,42 @@ $(function(){
     // 检测是否已登录
     var login=false;
 
-	$("#lotteryBtn").rotate({ 
+
+/*    // 页面加载向服务器发送ajax请求,检测是否登录
+	login=false;
+		// login=true;
+		if (!login) {
+		// $(".roll-bg,.draw,.count").animate({show()},500);
+			// $(".roll-bg,.count").hide();
+			// $(".login").text("您必须登录才能参加抽奖！")
+			// $(".login").slideToggle(500);
+			return;
+		} ;
+*/
+
+	$(".draw").rotate({ 
 	   bind: 
 		 { 
-			touchstart: function(){
-
+			// touchstart: function(){
+				click: function(){
+				// alert(555)
 			// ------------------------------------------------------------------------------------------------------
 			// 向服务器发送ajax请求,检测是否登录
-				// login=false;
+				//login=false;
 				login=true;
-				if (!login) {
-					$(".login").text("您必须登录才能参加抽奖！")
-					$(".login").slideToggle(500);
+				if (login) {
+					
+					/*
+					$(".roll-bg,.draw,.count").animate({show()},500);
+					$(".roll-box,.examine,.count").show();*/
+
+					/*$(".login").text("您必须登录才能参加抽奖！")
+					$(".login").slideToggle(500);*/
+					// return;
+				}else{
+					alert("您必须登录才能参加抽奖！");
 					return;
-				} ;
+				};
 
 
 			// ------------------------------------------------------------------------------------------------------
@@ -87,11 +111,17 @@ $(function(){
 		        };
 
       
-        		if(mov){
+        		 if(mov){
         			// 抽奖时向服务器发送ajax请求，返回中奖结果：prize（几等奖）、sncode（兑奖SN码）
+					$.ajax({
+						url: "test.html",
+						context: document.body
+						}).done(function() {
+						$( this ).addClass( "done" );
+					});
 					prize=3;
 					sncode="1245668885";
-
+					
 
 
         			running=true;
@@ -120,7 +150,85 @@ $(function(){
 		 } 
 	   
 	});
-
+	
 
 	
+	// 星星评级
+	$('.star-size').each(function(){   
+	    var result=$(this).val();   
+	    // alert(result);
+	    switch(result){
+			case "1":
+				$(this).siblings(".star-main").css({'background-position':'0 -13px'});
+			  break;
+			case "2":
+				$(this).siblings(".star-main").css({'background-position':'0 -41px'});
+			  break;
+			case "3":
+				$(this).siblings(".star-main").css({'background-position':'0 -69px'});
+			  break;
+			case "4":
+				$(this).siblings(".star-main").css({'background-position':'0 -97px'});
+			  break;
+			case "5":
+				$(this).siblings(".star-main").css({'background-position':'0 -125px'});
+			  break;
+
+		}
+	}); 
+
+	//下载样式
+	$(".download-bt").click(function  () {
+		$(this).css({background:"#009bfe",color:"#fff"})
+	})
+	
+
+	//弹窗
+/*	cur = 0;
+    $(".small-img-box img").click(function  () {
+    	
+    	// 滚动条回到顶部 
+    	$("html,body").animate({scrollTop:0},200);	
+    	cur = $(this).index();
+    	// alert(cur);
+      $(".black_overlay,.white_content").show();
+      $("body").css("overflow","hidden");
+  
+    })
+  
+    $(".screenshot-close,.black_overlay").click(function  () {
+    	 $(".black_overlay,.white_content").hide();
+    	 $("body").css("overflow","auto");
+    })*/
+
+
+    var scrolltop = $(document).height(); 
+    $(".black_overlay ").css("height",scrolltop)
+
+
+    showDiv($(".popup"));
+	function showDiv(obj){
+	 $(obj).show();
+	 center(obj);
+	 $(window).scroll(function(){
+	  center(obj);
+	 });
+	 $(window).resize(function(){
+	  center(obj);
+	 });
+	}
+
+	function center(obj){
+		var windowWidth = document.documentElement.clientWidth;  
+		var windowHeight = document.documentElement.clientHeight;  
+		var popupHeight = $(obj).height();  
+		var popupWidth = $(obj).width();   
+		$(obj).css({  
+	    	"position": "absolute",  
+	    	"top": (windowHeight-popupHeight)/2+$(document).scrollTop(),  
+	    	"left": (windowWidth-popupWidth)/2  
+	 	}); 
+	}
+
+
 })
