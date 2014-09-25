@@ -48,7 +48,7 @@ public class LotteryServiceImpl implements LotteryService {
         // is Svip
         boolean isSvip = lotteryDaoImpl.isSvip(userInfo);
         if (isSvip) {
-
+            //TODO vip 并且未中过奖
         }
         // is vip
         int downloads = lotteryDaoImpl.countUserDownloads(userInfo.getId());

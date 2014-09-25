@@ -1,15 +1,36 @@
 package com.bbkmobile.iqoo.common;
 
+import com.bbkmobile.iqoo.common.util.cfgfile.PropertiesFileManager;
+
 public class Constants {
 
-    private final static String COMMON_URL = "http://219.130.55.42:8400";
-    public final static String GETINFO_URL = COMMON_URL
+    private  static String COMMON_URL = "http://219.130.55.42:8400";
+    
+    public  static String GETINFO_URL = COMMON_URL
             + "/v3/web/login/getUserInfo";
-    public final static String GETACCESSTOKEN_URL = COMMON_URL
+    
+    public  static String GETACCESSTOKEN_URL = COMMON_URL
             + "/v3/web/login/getAccessToken";
-    public final static String LOGIN_URL = COMMON_URL
-            + "/v3/web/login/authorize?client_id=4&redirect_uri=http://192.168.16.87:8080/lottery/mvc/doLogin&response_type=code&page_type=1&common=0";
+    
+    public  static String LOGIN_URL = COMMON_URL
+            + "/v3/web/login/authorize?response_type=code&page_type=1&common=0&client_id=";//&redirect_uri=http://192.168.16.87:8080/lottery/mvc/doLogin";
+    
+    public String LOTTERY_URL = "/mvc/doLogin";
+    
     public static final String LOGIN_TAG = "loginTag";
     
     public static Integer totoal = 3;
+    
+    private PropertiesFileManager manager = PropertiesFileManager.getInstance();
+    
+    public Constants(){
+        init();
+    }
+
+    private void init() {
+        COMMON_URL = manager.getProperty("usercenter.url");
+        String client_id = manager.getProperty("usercenter.client_id");
+        LOGIN_URL = LOGIN_URL + client_id + "&redirect_uri=" + manager.getProperty("lottery.url")+LOGIN_URL;
+    }
+    
 }

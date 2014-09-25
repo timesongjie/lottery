@@ -17,7 +17,7 @@ function getRecords(){
 			}
 		},
 		error : function() {
-			alert("异常！");
+			alert("请登陆！");
 		}
 	});
 }

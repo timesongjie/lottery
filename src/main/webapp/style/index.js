@@ -118,6 +118,10 @@ $(function() {
 									prize = object.lottery_grade;
 									sncode = object.sn;
 									running = true;
+									var lastCount = object.lastCount;
+									if(lastCount == 0 ){
+										//TODO 
+									}
 									if (prize == 1) {
 										rotateFunc(1, 5, '恭喜您抽中的一等奖!兑奖SN码为:'
 												+ sncode);
@@ -137,7 +141,7 @@ $(function() {
 												* angle.length)];
 										rotateFunc(0, angle, '手气不行，洗洗手再来！');
 									}
-									$('#count-time').html(object.lastCount);
+									$('#count-time').html(lastCount);
 								},
 								error : function() {
 									alert("异常！");
