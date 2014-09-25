@@ -4,30 +4,37 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="lotteryMapper">
-
+	<!-- 中奖记录 -->
 	<select id="selectLotteryRecords" resultType="lotteryRecord">
-		select * from t_lottery_record order by lottery_grade limit 0,10
+		select * from t_lottery_record order by lottery_grade,id desc limit 0,10
 	</select>
 
 	<insert id="addLotteryRecords" parameterType="lotteryRecord">
 		insert into t_lottery_record(userId,lottery_date,sn,lottery_grade)
 		values(#{userId},#{lottery_date},#{sn},#{lottery_grade})
 	</insert>
-
-	<select id="addLotteryDownloadRecord" resultType="lotteryDownloadRecord">
+	
+	<!-- 下载记录 -->
+	<select id="addLotteryDownloadRecord" parameterType="lotteryDownloadRecord" >
 		insert into t_lottery_download(userId,app_id)
 		values(#{userId},#{appId})
 	</select>
-
-	<select id="countUserDownloadRecord" parameterType="string">
+	<select id="countUserDownloadRecord" parameterType="string" resultType="int">
 		select count(*) from t_lottery_download where userId = #{userId}
 	</select>
 	
-	<insert id="addClickRecords" parameterType="lotteryClickRecord">
-		insert into t_lottery_click(userId,click_date)
-		values(#{userId},#{clickDate})
-	</insert>
-	<select id="countClickRecords" parameterType="String">
-		select count(*) from t_lottery_click where clickDate=#{date} group by userId;
+	<!-- 是否svip -->
+	<select id="isVip" parameterType="lotteryUserInfo" resultType="int">
+		select count(*) from t_lottery_users where name = #{name} or email = #{email} or phonenum = #{phonenum} 
 	</select>
+	
+	<!-- click -->
+	<select id="countClickTimesByUserId" parameterType="string" resultType="integer">
+		select  count(*) from t_lottery_click where userId = #{userId} and click_date like concat(curdate(),'%')
+	</select>
+	<insert id="addclickRecords" parameterType="lotteryClickRecord">
+		insert into t_lottery_click(userId,click_date)values(#{userId},now())
+	</insert>
+	
+	
 </mapper>

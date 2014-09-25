@@ -114,11 +114,10 @@ $(function() {
 								url : "lottery.json",
 								dataType: "json",
 								success : function(data) {
-									var object =   eval(data);
+									var object = eval(data);
 									prize = object.lottery_grade;
 									sncode = object.sn;
 									running = true;
-									
 									if (prize == 1) {
 										rotateFunc(1, 5, '恭喜您抽中的一等奖!兑奖SN码为:'
 												+ sncode);
@@ -138,6 +137,7 @@ $(function() {
 												* angle.length)];
 										rotateFunc(0, angle, '手气不行，洗洗手再来！');
 									}
+									$('#count-time').html(object.lastCount);
 								},
 								error : function() {
 									alert("异常！");

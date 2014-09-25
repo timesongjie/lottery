@@ -21,6 +21,8 @@ public class LotteryRecord {
     private Date lottery_date;
     private String sn;   // 中奖编号
     private Integer lottery_grade;// 几等奖
+    
+    private Integer lastCount;
 
     public Integer getId() {
         return id;
@@ -60,5 +62,13 @@ public class LotteryRecord {
 
     public void setLottery_grade(Integer lottery_grade) {
         this.lottery_grade = lottery_grade;
+    }
+
+    public Integer getLastCount() {
+        return lastCount;
+    }
+
+    public void setLastCount(Integer lastCount) {
+        this.lastCount = lastCount;
     }
 }

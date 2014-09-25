@@ -7,8 +7,10 @@ import javax.annotation.Resource;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryClickRecord;
 import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryDownloadRecord;
 import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryRecord;
+import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryUserInfo;
   
 @Repository
 public class LotteryDAOImpl implements LotteryDAO{
@@ -33,7 +35,7 @@ public class LotteryDAOImpl implements LotteryDAO{
     public void addLotteryDownloadRecords(LotteryDownloadRecord record)
             throws Exception {
         if(record != null){
-            session.insert("lotteryMapper.addLotteryDownloadRecord");
+            session.insert("lotteryMapper.addLotteryDownloadRecord",record);
         }
     }
 
@@ -42,4 +44,23 @@ public class LotteryDAOImpl implements LotteryDAO{
         return session.selectOne("lotteryMapper.countUserDownloadRecord");
     }
 
+    @Override
+    public boolean isSvip(LotteryUserInfo userInfo) throws Exception {
+        int count = session.selectOne("lotteryMapper.isVip",userInfo);
+        if(count >0){
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public int countClickTimesByUserId(String userId) throws Exception{
+     return session.selectOne("lotteryMapper.countClickTimesByUserId",userId);
+    }
+
+    @Override
+    public void addClickRecords(LotteryClickRecord records) throws Exception {
+        session.insert("lotteryMapper.addclickRecords", records);
+    }
+    
+    
 }
