@@ -12,12 +12,12 @@
 	<name>lottery Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-		<!-- -->
+		<!--
 		<dependency>
 			<groupId>com.bbkmobile.iqoo</groupId>
 			<artifactId>com.bbkmobile.iqoo.cache</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>com.bbkmobile.iqoo</groupId>
 			<artifactId>com.bbkmobile.iqoo.common</artifactId>

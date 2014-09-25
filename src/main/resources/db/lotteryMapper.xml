@@ -19,7 +19,15 @@
 		values(#{userId},#{appId})
 	</select>
 
-	<insert id="countUserDownloadRecord" parameterType="string">
+	<select id="countUserDownloadRecord" parameterType="string">
 		select count(*) from t_lottery_download where userId = #{userId}
+	</select>
+	
+	<insert id="addClickRecords" parameterType="lotteryClickRecord">
+		insert into t_lottery_click(userId,click_date)
+		values(#{userId},#{clickDate})
 	</insert>
+	<select id="countClickRecords" parameterType="String">
+		select count(*) from t_lottery_click where clickDate=#{date} group by userId;
+	</select>
 </mapper>

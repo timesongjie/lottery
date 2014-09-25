@@ -7,6 +7,15 @@ public class LotteryUserInfo {
     private String email;
     private String phonenum;
     
+    
+    public LotteryUserInfo() {
+    }
+    
+    public LotteryUserInfo(Integer id,String name, String email, String phonenum) {
+        this.name = name;
+        this.email = email;
+        this.phonenum = phonenum;
+    }
     public Integer getId() {
         return id;
     }
