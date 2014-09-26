@@ -43,7 +43,7 @@
 	
 	<!-- award -->
 	<select id="getAward" parameterType="integer" resultType="lottery" >
-		select id,grade,code from t_lottery_award where grade = #{grade} and status = 0 and userid is null and start_time like concat(curdate(),'%') limit 1
+		select id,grade,lottery_time,code from t_lottery_award where grade = #{grade} and status = 0 and userid is null and start_time like concat(curdate(),'%') limit 1
 	</select>
 	
 	<update id="updateAward" parameterType="Map">
