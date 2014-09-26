@@ -4,15 +4,14 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="lotteryMapper">
-	<!-- 中奖记录 -->
-	<select id="selectLotteryRecords" resultType="lotteryRecord">
-		select * from t_lottery_record order by lottery_grade,id desc limit 0,10
-	</select>
-
+	
+	
+	<!-- 中奖记录 
 	<insert id="addLotteryRecords" parameterType="lotteryRecord">
 		insert into t_lottery_record(userId,lottery_date,sn,lottery_grade)
 		values(#{userId},#{lottery_date},#{sn},#{lottery_grade})
 	</insert>
+	-->
 	
 	<!-- 下载记录 -->
 	<select id="addLotteryDownloadRecord" parameterType="lotteryDownloadRecord" >
@@ -25,16 +24,36 @@
 	
 	<!-- 是否svip -->
 	<select id="isVip" parameterType="lotteryUserInfo" resultType="int">
-		select count(*) from t_lottery_users where name = #{name} or email = #{email} or phonenum = #{phonenum} 
+		select count(*) from t_lottery_users where userid = #{id} 
+	</select>
+	<select id="hasTop3" parameterType="lotteryUserInfo" resultType="lottery">
+		select id from t_lottery_award where userid = #{id} and grade in('1','2','3') limit 1
+	</select>
+	<select id="has4" parameterType="lotteryUserInfo" resultType="lottery">
+		select id from t_lottery_award where userid = #{id} and grade in('4','5') and lottery_time like concat(curdate(),'%') limit 1
 	</select>
 	
 	<!-- click -->
 	<select id="countClickTimesByUserId" parameterType="string" resultType="integer">
-		select  count(*) from t_lottery_click where userId = #{userId} and click_date like concat(curdate(),'%')
+		select  count(*) from t_lottery_click_0930 where userId = #{userId} and click_date like concat(curdate(),'%')
 	</select>
 	<insert id="addclickRecords" parameterType="lotteryClickRecord">
-		insert into t_lottery_click(userId,click_date)values(#{userId},now())
+		insert into t_lottery_click_0930(userId,grade,click_date)values(#{userId},#{grade},now())
 	</insert>
 	
+	<!-- award -->
+	<select id="getAward" parameterType="integer" resultType="lottery" >
+		select id,grade,code from t_lottery_award where grade = #{grade} and status = 0 and userid is null and start_time like concat(curdate(),'%') limit 1
+	</select>
 	
+	<update id="updateAward" parameterType="Map">
+		update t_lottery_award set status = 1 , userid = #{userId} , lottery_time = now() where id = #{id}
+	</update>
+	
+	<select id="selectLotteryRecords" resultType="lotteryRecord">
+		 select t1.id,t1.grade as lottery_grade,ifnull(ifnull(t2.name,t2.phonenum),t2.email) as userid from t_lottery_award t1,t_lottery_users t2 where status = 1 and t1.userid= t2.userid order by grade,id desc limit 0,10
+	</select>
+	<select id="ownsRecords" resultType="lotteryRecord" parameterType="lotteryUserInfo">
+		select id,grade as lottery_grade from t_lottery_award where userid = #{id}
+	</select>
 </mapper>

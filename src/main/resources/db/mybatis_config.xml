@@ -24,5 +24,6 @@
         <typeAlias alias="lotteryClickRecord" type="com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryClickRecord"/>
         <typeAlias alias="lotteryUserInfo" type="com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryUserInfo"/>
         
+        <typeAlias alias="lottery" type="com.bbkmobile.iqoo.common.lottery.Lottery"/>
     </typeAliases> 
 </configuration>   

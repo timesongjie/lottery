@@ -1,6 +1,5 @@
 package com.bbkmobile.iqoo.interfaces.lottery.action;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,14 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bbkmobile.iqoo.common.Constants;
-import com.bbkmobile.iqoo.common.UUIDGenerator;
 import com.bbkmobile.iqoo.common.json.ResultObject;
 import com.bbkmobile.iqoo.common.lottery.Lottery;
 import com.bbkmobile.iqoo.common.lottery.UserCenterInfo;
 import com.bbkmobile.iqoo.common.net.HttpsURLConnectionUtil;
 import com.bbkmobile.iqoo.interfaces.lottery.business.AppInfoService;
 import com.bbkmobile.iqoo.interfaces.lottery.business.LotteryService;
-import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryClickRecord;
 import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryDownloadRecord;
 import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryRecord;
 import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryUserInfo;
@@ -46,6 +43,7 @@ public class LotteryController {
     @RequestMapping("/lottery")
     public LotteryRecord lottery(HttpServletRequest request,
             HttpServletResponse response) {
+        // TODO 活动结束日期限制
         try {
             LotteryRecord record = new LotteryRecord();
             LotteryUserInfo userInfo = (LotteryUserInfo) request.getSession()
@@ -58,26 +56,18 @@ public class LotteryController {
                 if (alreadyClick < Constants.totoal) {
                     // 抽奖
                     lottery = lotteryServiceImpl.lottery(userInfo);
-                    //设置奖品级别
-                    record.setLottery_grade(lottery.getGrand());
-                    if (lottery != Lottery.NONLOTTERY) {
-                        // 生成唯一SN码
-                        lottery.setSn(UUIDGenerator.getUUID());
-                        // 生成中奖记录
-                        record.setUserId(userInfo.getId());
-                        record.setSn(lottery.getSn());
-                        record.setLottery_date(new Date());
-                        lotteryServiceImpl.addLotteryRecord(record);
+                    if (lottery != null) {
+                        // 设置奖品级别
+                        record.setLottery_grade(Integer.valueOf(lottery
+                                .getGrade()));
+                        record.setSn(lottery.getCode());
+                    } else {// 未中奖
+                        record.setLottery_grade(0);
                     }
-
-                    // 新增抽奖记录
-                    LotteryClickRecord clickRecord = new LotteryClickRecord();
-                    clickRecord.setUserId(userInfo.getId());
-                    lotteryServiceImpl.addClickRecord(clickRecord);
+                    record.setUserId(userInfo.getId());
 
                     int lastCount = Constants.totoal - alreadyClick - 1;
                     record.setLastCount(lastCount > 0 ? lastCount : 0);
-                    
                     // 返回抽奖次数，并更新前台
                 }
             }
@@ -99,7 +89,6 @@ public class LotteryController {
             if (userInfo != null) {
                 String app_id = request.getParameter("id");
 
-                String model = request.getParameter("model");
                 String appVersion = request.getParameter("appVersion");
                 boolean isFirst = true; // 是否为断点续传
                 String patch = request.getParameter("patch");
@@ -111,25 +100,11 @@ public class LotteryController {
                 lotteryServiceImpl.addLotteryDownloadRecord(record);
 
                 String filePath = iAppInfoService.getApkFilePath(app_id,
-                        appVersion, isFirst, "local", patch, model);
+                        appVersion, isFirst, "local", patch);
                 response.sendRedirect(filePath);
             } else {
                 return "redirect:" + Constants.LOGIN_URL;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @RequestMapping("/records")
-    public ResultObject<List<LotteryRecord>> lotteryRecords() {
-        try {
-            List<LotteryRecord> list = lotteryServiceImpl.getTop10Records();
-            ResultObject<List<LotteryRecord>> result = new ResultObject<List<LotteryRecord>>();
-            result.setResult(true);
-            result.setValue(list);
-            return result;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -209,6 +184,40 @@ public class LotteryController {
                 result.setValue(lastCount > 0 ? lastCount : 0);
                 return result;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping("/owns")
+    public ResultObject<List<LotteryRecord>> getOwnRecords(
+            HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        LotteryUserInfo userInfo = session.getAttribute(Constants.LOGIN_TAG) != null ? (LotteryUserInfo) session
+                .getAttribute(Constants.LOGIN_TAG) : null;
+        if (userInfo != null) {
+            try {
+                List<LotteryRecord> list = lotteryServiceImpl
+                        .getOwnsRecords(userInfo);
+                ResultObject<List<LotteryRecord>> result = new ResultObject<List<LotteryRecord>>();
+                result.setResult(true);
+                result.setValue(list);
+                return result;
+            } catch (Exception e) {
+            }
+        }
+        return null;
+    }
+
+    @RequestMapping("/records")
+    public ResultObject<List<LotteryRecord>> lotteryRecords() {
+        try {
+            List<LotteryRecord> list = lotteryServiceImpl.getTop10Records();
+            ResultObject<List<LotteryRecord>> result = new ResultObject<List<LotteryRecord>>();
+            result.setResult(true);
+            result.setValue(list);
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
         }

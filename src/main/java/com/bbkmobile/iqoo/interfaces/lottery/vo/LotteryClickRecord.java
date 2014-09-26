@@ -16,6 +16,7 @@ public class LotteryClickRecord {
 
     private Integer id;
     private String userId;
+    private String grade;
     private Date clickDate;
     
     public Integer getId() {
@@ -35,5 +36,11 @@ public class LotteryClickRecord {
     }
     public void setClickDate(Date clickDate) {
         this.clickDate = clickDate;
+    }
+    public String getGrade() {
+        return grade;
+    }
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 }

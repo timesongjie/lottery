@@ -21,13 +21,12 @@ public class Constants {
     
     public static Integer totoal = 3;
     
-    private PropertiesFileManager manager = PropertiesFileManager.getInstance();
+    private static PropertiesFileManager manager = PropertiesFileManager.getInstance();
     
-    public Constants(){
+    static {
         init();
     }
-
-    private void init() {
+    private static void init() {
         COMMON_URL = manager.getProperty("usercenter.url");
         String client_id = manager.getProperty("usercenter.client_id");
         LOGIN_URL = LOGIN_URL + client_id + "&redirect_uri=" + manager.getProperty("lottery.url")+LOGIN_URL;

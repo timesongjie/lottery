@@ -11,10 +11,11 @@ import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryUserInfo;
 public interface LotteryService {
 
     public List<LotteryRecord> getTop10Records() throws Exception;
+    public List<LotteryRecord> getOwnsRecords(LotteryUserInfo info) throws Exception;
 
     public void addLotteryDownloadRecord(LotteryDownloadRecord record)
             throws Exception;
-    public void addLotteryRecord(LotteryRecord record)throws Exception;
+//    public void addLotteryRecord(LotteryRecord record)throws Exception;
     /**
      * 根据用户性质参与抽奖
      * @Description:  

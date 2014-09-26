@@ -26,5 +26,5 @@ public interface AppInfoService {
 
 
     String getApkFilePath(String id, String appVersion, boolean isFirst,
-            String target, String patch, String model) throws Exception;
+            String target,String patch) throws Exception;
 }

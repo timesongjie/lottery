@@ -38,7 +38,7 @@ public class AppInfoServiceImpl implements AppInfoService {
 
     @Override
     public String getApkFilePath(String id, String appVersion, boolean isFirst,
-            String target, String patch, String model) throws Exception {
+            String target, String patch) throws Exception {
 
         if (null != appVersion) {
             if (appVersion.matches(".*\\..*")) {
@@ -62,7 +62,7 @@ public class AppInfoServiceImpl implements AppInfoService {
                     }
 
                     path = appInfo.getAppApk();
-                    if (null != patch && !"".equals(patch)) {
+                    if (null != patch && !"".equals(patch.trim())) {
                         String patchs = appInfo.getPatchs();
                         if (patchs.contains(patch)) {
                             path = path.substring(0, path.lastIndexOf("."))
