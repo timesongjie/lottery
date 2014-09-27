@@ -48,7 +48,8 @@ input {
 	border: 0;
 	vertical-align: middle;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-appearance: none
+	-webkit-appearance: none;
+	background: none;
 }
 
 .banner-main img{
@@ -58,7 +59,7 @@ input {
 }
 
 
-.roll-box,.examine,.draw,.count{
+.roll-box,.examine,.draw,.count,.log-but,.popup{
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
 	-ms-border-radius:5px;
@@ -156,7 +157,6 @@ input {
 .count{
 	margin: 0 auto 20px;
 	background: #fff;
-	display: none;
 }
 .draw,.count{
 	height: 40px;
@@ -259,10 +259,16 @@ input {
 	color: #54534f;
 }
 .star-main{
+	width:90px; 
 	height: 22px;
-	background-image: url(../images/star2.png);
-	background-repeat: no-repeat;
-	background-position: 0 -13px;
+	/*border: solid 1px red;*/
+	/*background-image: url(../images/star2.png);*/
+	/*background-repeat: no-repeat;*/
+	/*background-position: 0 -13px;*/
+}
+.star-main img{
+	width: 100%;
+	height: auto;
 }
 .apk-size{
 	font-size: 12px;
@@ -304,19 +310,19 @@ input {
     filter: alpha(opacity=80);
 }
 
-/*图片弹窗预览*/
+/*弹窗*/
 
-.popup {
+.popup{
     display: none;
     width: 90%;
     background:#f2f2f2; 
     z-index: 1002;
-    -webkit-border-radius:5px;
+/*    -webkit-border-radius:5px;
 	-moz-border-radius:5px;
 	-ms-border-radius:5px;
 	-o-border-radius:5px;
 	border-radius:5px;
-	background-clip:padding-box;
+	background-clip:padding-box;*/
 }
 .pop-tile,.get-prize{
 	font-size: 18px;
@@ -474,6 +480,7 @@ input {
   	padding: 0 5px;
 
 }
+
 .check-rule{
   	width: 105px;
   	color: #fa944c;
@@ -485,4 +492,124 @@ input {
   	text-align: center;
 }
 /*-------------------------------------------------------------------------------------*/
-/*longin*/
+/*login*/
+.login-middle{
+	margin: 0 10px;
+	/*background: orange;*/
+}
+.login-bg{
+	padding-top: 30px;
+	
+}
+.user-name{
+	border: solid 1px #c7c7c7;
+	-moz-border-radius-topleft: 5px; 
+	-moz-border-radius-topright: 5px; 
+	-webkit-border-top-left-radius: 5px; 
+	-webkit-border-top-right-radius: 5px;
+	height: 60px;
+	display: -webkit-box;
+	background: #fff;
+}
+.user-password{
+	border: solid 1px #c7c7c7;
+	border-top:none;
+	-moz-border-radius-bottomright: 5px; 
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-right-radius: 5px; 
+	-webkit-border-bottom-left-radius: 5px;
+	height: 60px;
+	display: -webkit-box;
+	background: #fff;
+}
+.font-ico{
+	width: 45px;
+	height: 60px;
+	margin: 0 15px;
+	-moz-box-flex: 0; 
+ 	-webkit-box-flex: 0; 
+  	box-flex: 0;
+}
+.name-ico{
+	background: url(../images/username.png) no-repeat 0 center;
+}
+.password-ico{
+	background: url(../images/pasword.png) no-repeat 0 center;
+}
+.input-bg{
+	-moz-box-flex: 1; 
+ 	-webkit-box-flex: 1; 
+  	box-flex: 1;
+}
+.input-w{
+	display: block;
+  	width: 96%;
+  	padding-right: 4%;
+  	height: 60px;
+  	font-size: 16px;
+  	color: #acacac;
+}
+.log-but{
+	display: block;
+	width: 100%;
+	background: #488ee6;
+	height: 50px;
+	line-height: 50px;
+	font-size: 20px;
+	color: #fff;
+	text-align: center;
+	margin-top:30px;
+}
+.help-box{
+	/*margin-top: 20px;*/
+	max-width: 430px;
+	margin: 20px auto 0;
+}
+.log-help1{
+	font-size: 18px;
+	color: #488ee6;
+	line-height: 35px;
+
+}
+.log-help2{
+	color: #000;
+	line-height: 30px;
+	font-size: 16px;
+}
+.log-help3{
+	color: #999999;
+	line-height: 25px;
+	font-size: 15px;
+}
+.prompt-bg{
+	/*display: none;*/
+	/*border:solid 1px red;*/
+	width: 100%;
+	text-align: center;
+	z-index: 1000;
+  position:fixed;  
+  left:0px; 
+  bottom:0; 
+  margin-bottom: 30px;
+  _position:absolute;  
+  _bottom:auto;  
+  _top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));
+}
+.prompt-box{
+	display: none;
+	background: #6d6c6b;
+	color: #fff;
+	padding: 10px 12px;
+	opacity: 0.8; 
+  filter:alpha(opacity=80);
+	-moz-opacity:.8;
+	-khtml-opacity:.8;
+	opacity:.8;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	-ms-border-radius:5px;
+	-o-border-radius:5px;
+	border-radius:5px;
+	background-clip:padding-box;
+
+}

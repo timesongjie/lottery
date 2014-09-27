@@ -1,13 +1,11 @@
 package com.bbkmobile.iqoo.interfaces.lottery.business;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.bbkmobile.iqoo.common.lottery.Lottery;
 import com.bbkmobile.iqoo.interfaces.lottery.dao.LotteryDAO;

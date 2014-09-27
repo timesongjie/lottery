@@ -42,12 +42,12 @@ public class LotteryDAOImpl implements LotteryDAO{
 
     @Override
     public int countUserDownloads(String userId) throws Exception {
-        return session.selectOne("lotteryMapper.countUserDownloadRecord");
+        return (Integer)session.selectOne("lotteryMapper.countUserDownloadRecord",userId);
     }
 
     @Override
     public boolean isSvip(LotteryUserInfo userInfo) throws Exception {
-        int count = session.selectOne("lotteryMapper.isVip",userInfo);
+        int count = (Integer)session.selectOne("lotteryMapper.isVip",userInfo);
         if(count >0){
             return true;
         }
@@ -62,7 +62,7 @@ public class LotteryDAOImpl implements LotteryDAO{
         params.put("tableName", "t_lottery_click_"+logPost);
         params.put("userId", "'"+userId+"'");
         
-     return session.selectOne("lotteryMapper.countClickTimesByUserId",params);
+     return (Integer)session.selectOne("lotteryMapper.countClickTimesByUserId",params);
     }
 
     @Override

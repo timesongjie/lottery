@@ -15,8 +15,8 @@
 	
 	<!-- 下载记录 -->
 	<select id="addLotteryDownloadRecord" parameterType="lotteryDownloadRecord" >
-		insert into t_lottery_download(userId,app_id)
-		values(#{userId},#{appId})
+		insert into t_lottery_download(userId,app_id,download_time)
+		values(#{userId},#{appId},now())
 	</select>
 	<select id="countUserDownloadRecord" parameterType="string" resultType="int">
 		select count(*) from t_lottery_download where userId = #{userId}
@@ -67,17 +67,32 @@
 	
 	<!-- award -->
 	<select id="getAward" parameterType="integer" resultType="lottery" >
-		select id,grade,lottery_time,code from t_lottery_award where grade = #{grade} and status = 0 and userid is null and start_time like concat(curdate(),'%') limit 1
+		select 
+			id,grade,lottery_time,code,name as award_name 
+		from 
+			t_lottery_award 
+			
+		where 
+			grade = #{grade} and status = 0 and userid is null and start_time like concat(curdate(),'%') limit 1
 	</select>
 	
 	<update id="updateAward" parameterType="Map">
-		update t_lottery_award set status = 1 , userid = #{userId} , lottery_time = now() where id = #{id}
+		update t_lottery_award set status = 1 , userid = #{userId} , lottery_time = now() where id = #{id}  and status = 0
 	</update>
 	
 	<select id="selectLotteryRecords" resultType="lotteryRecord">
-		 select t1.id,t1.grade as lottery_grade,ifnull(ifnull(t2.name,t2.phonenum),t2.email) as userid from t_lottery_award t1,t_lottery_users t2 where status = 1 and t1.userid= t2.userid order by grade,id desc limit 0,10
+		 select 
+		 	t1.id,t1.grade as lottery_grade,ifnull(ifnull(t2.name,t2.phonenum),t2.email) as userid ,t1.name as award_name 
+		 from 
+		 	t_lottery_award t1,t_lottery_users t2 
+		 where 
+		 	status = 1 and t1.userid= t2.userid order by grade,id desc limit 0,10
 	</select>
 	<select id="ownsRecords" resultType="lotteryRecord" parameterType="lotteryUserInfo">
-		select id,grade as lottery_grade,lottery_time as lottery_date,code as sn from t_lottery_award where userid = #{id}
+		select 
+			id,grade as lottery_grade,lottery_time as lottery_date,code as sn ,name as award_name 
+		from 
+			t_lottery_award 
+		where userid = #{id}
 	</select>
 </mapper>

@@ -37,6 +37,11 @@ public class Constants {
         CLIENT_SECRET = manager.getProperty("usercenter.client_secret");
         
         LOGIN_URL = LOGIN_URL + CLIENT_ID + "&redirect_uri=" + manager.getProperty("lottery.url")+LOTTERY_URL;
+        
+        String prize_count = manager.getValueFromPropFile("prize_count");
+        if(prize_count != null && !"".equals(prize_count.trim())){
+            totoal = Integer.valueOf(prize_count);
+        }
     }
     
 }

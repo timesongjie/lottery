@@ -26,7 +26,7 @@ ADD INDEX `userid_index` (`userId` ASC);
 CREATE TABLE `t_lottery_click_0930` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `userId` VARCHAR(45) NULL,
-  `grade` CHAR(1) NULL,
+  `grade` TINYINT(1) NULL,
   `click_date` DATETIME,
   PRIMARY KEY (`id`))ENGINE = InnoDB;
 ALTER TABLE `t_lottery_click_0930` 
@@ -35,7 +35,7 @@ ADD INDEX `userid_index` (`userId` ASC);
 CREATE TABLE `t_lottery_click_1001` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `userId` VARCHAR(45) NULL,
-  `grade` CHAR(1) NULL,
+  `grade`  TINYINT(2) NULL,
   `click_date` DATETIME ,
   PRIMARY KEY (`id`))ENGINE = InnoDB;
 ALTER TABLE `t_lottery_click_1001` 
@@ -44,7 +44,7 @@ ADD INDEX `userid_index` (`userId` ASC);
 CREATE TABLE `t_lottery_click_1002` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `userId` VARCHAR(45) NULL,
-  `grade` CHAR(1) NULL,
+  `grade`  TINYINT(2) NULL,
   `click_date` DATETIME ,
   PRIMARY KEY (`id`))ENGINE = InnoDB;
 ALTER TABLE `t_lottery_click_1002` 
@@ -54,7 +54,7 @@ ADD INDEX `userid_index` (`userId` ASC);
 CREATE TABLE `t_lottery_click_1003` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `userId` VARCHAR(45) NULL,
-  `grade` CHAR(1) NULL,
+  `grade` TINYINT(2) NULL,
   `click_date` DATETIME ,
   PRIMARY KEY (`id`))ENGINE = InnoDB;
 ALTER TABLE `t_lottery_click_1003` 
@@ -63,7 +63,7 @@ ADD INDEX `userid_index` (`userId` ASC);
 CREATE TABLE `t_lottery_click_1004` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `userId` VARCHAR(45) NULL,
-  `grade` CHAR(1) NULL,
+  `grade` TINYINT(2) NULL,
   `click_date` DATETIME ,
   PRIMARY KEY (`id`))ENGINE = InnoDB;
 ALTER TABLE `t_lottery_click_1004` 
@@ -72,7 +72,7 @@ ADD INDEX `userid_index` (`userId` ASC);
 CREATE TABLE `t_lottery_click_1005` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `userId` VARCHAR(45) NULL,
-  `grade` CHAR(1) NULL,
+  `grade` TINYINT(2) NULL,
   `click_date` DATETIME ,
   PRIMARY KEY (`id`))ENGINE = InnoDB;
 ALTER TABLE `t_lottery_click_1005` 
@@ -81,7 +81,7 @@ ADD INDEX `userid_index` (`userId` ASC);
 CREATE TABLE `t_lottery_click_1006` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `userId` VARCHAR(45) NULL,
-  `grade` CHAR(1) NULL,
+  `grade` TINYINT(2) NULL,
   `click_date` DATETIME ,
   PRIMARY KEY (`id`))ENGINE = InnoDB;
 ALTER TABLE `t_lottery_click_1006` 
@@ -90,7 +90,7 @@ ADD INDEX `userid_index` (`userId` ASC);
 CREATE TABLE `t_lottery_click_1007` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `userId` VARCHAR(45) NULL,
-  `grade` CHAR(1) NULL,
+  `grade` TINYINT(2) NULL,
   `click_date` DATETIME ,
   PRIMARY KEY (`id`))ENGINE = InnoDB;
 ALTER TABLE `t_lottery_click_1007` 
@@ -99,7 +99,7 @@ ADD INDEX `userid_index` (`userId` ASC);
 
 CREATE TABLE `t_lottery_award` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `grade` CHAR(1) NULL,
+  `grade` TINYINT(2) NULL,
   `code` VARCHAR(50) NULL COMMENT '兑奖码',
   `status` CHAR(1) NULL DEFAULT 0 COMMENT '0未被抽取1已抽取',
   `userid` VARCHAR(45) NULL,

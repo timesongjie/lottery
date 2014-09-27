@@ -75,6 +75,7 @@ public class LotteryController {
                         record.setLottery_grade(Integer.valueOf(lottery
                                 .getGrade()));
                         record.setSn(lottery.getCode());
+                        record.setAward_name(lottery.getAward_name());
                     } else {// 未中奖
                         record.setLottery_grade(0);
                     }
@@ -134,6 +135,13 @@ public class LotteryController {
     public String doLogin(HttpServletRequest request,
             HttpServletResponse response) {
         try {
+//            HttpSession session = request.getSession();
+//            LotteryUserInfo userInfo = session
+//                    .getAttribute(Constants.LOGIN_TAG) != null ? (LotteryUserInfo) session
+//                    .getAttribute(Constants.LOGIN_TAG) : null;
+//            if(userInfo == null){
+//                return "redirect:"+Constants.LOGIN_URL;
+//            }
             String code = request.getParameter("code");
             String openid = request.getParameter("openid");
             String openkey = request.getParameter("openkey");

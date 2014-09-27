@@ -44,6 +44,8 @@ public class Lottery {
     private Date start_time;
     private Date lottery_time;
 
+    private String award_name;
+    
     public int getId() {
         return id;
     }
@@ -98,6 +100,14 @@ public class Lottery {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public String getAward_name() {
+        return award_name;
+    }
+
+    public void setAward_name(String award_name) {
+        this.award_name = award_name;
     }
 
 }

@@ -21,6 +21,7 @@ public class LotteryRecord {
     private Date lottery_date;
     private String sn;   // 中奖编号
     private Integer lottery_grade;// 几等奖
+    private String award_name;
     
     private Integer lastCount;
     private String changeDate;
@@ -88,5 +89,13 @@ public class LotteryRecord {
 
     public void setChangeRule(String changeRule) {
         this.changeRule = changeRule;
+    }
+
+    public String getAward_name() {
+        return award_name;
+    }
+
+    public void setAward_name(String award_name) {
+        this.award_name = award_name;
     }
 }
