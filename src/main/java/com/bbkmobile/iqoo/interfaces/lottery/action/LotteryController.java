@@ -17,7 +17,6 @@ import com.bbkmobile.iqoo.common.json.ResultObject;
 import com.bbkmobile.iqoo.common.lottery.Lottery;
 import com.bbkmobile.iqoo.common.lottery.UserCenterInfo;
 import com.bbkmobile.iqoo.common.net.HttpsURLConnectionUtil;
-import com.bbkmobile.iqoo.interfaces.lottery.business.AppInfoService;
 import com.bbkmobile.iqoo.interfaces.lottery.business.LotteryService;
 import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryDownloadRecord;
 import com.bbkmobile.iqoo.interfaces.lottery.vo.LotteryRecord;
@@ -30,16 +29,31 @@ public class LotteryController {
      *   
      */
 
-    @Resource
-    private AppInfoService iAppInfoService;
+//    @Resource
+//    private AppInfoService iAppInfoService;
     @Resource
     private LotteryService lotteryServiceImpl;
-
-    @RequestMapping("/index")
-    public String index() {
-        return "index";
+    private String appstore = "http://appstore.vivo.com.cn/appinfo/downloadApkFile?app_version=550&id="; 
+    @RequestMapping("/home")
+    public String home(HttpServletRequest request) {
+        LotteryUserInfo userInfo = (LotteryUserInfo) request.getSession()
+                .getAttribute(Constants.LOGIN_TAG);
+        if (userInfo != null) {
+            return "index";
+        }else{
+            return "home";
+        }
     }
-
+    @RequestMapping("/index")
+    public String index(HttpServletRequest request) {
+        LotteryUserInfo userInfo = (LotteryUserInfo) request.getSession()
+                .getAttribute(Constants.LOGIN_TAG);
+        if (userInfo != null) {
+            return "index";
+        }else{
+            return "redirect:"+Constants.LOGIN_URL;
+        }
+    }
     @RequestMapping("/lottery")
     public LotteryRecord lottery(HttpServletRequest request,
             HttpServletResponse response) {
@@ -69,6 +83,8 @@ public class LotteryController {
                     int lastCount = Constants.totoal - alreadyClick - 1;
                     record.setLastCount(lastCount > 0 ? lastCount : 0);
                     // 返回抽奖次数，并更新前台
+                }else{
+                    record.setLastCount(0);   
                 }
             }
             return record;
@@ -78,7 +94,7 @@ public class LotteryController {
         return null;
     }
 
-    @RequestMapping("/downloadApkFile")
+    @RequestMapping("/download")
     public String download(HttpServletRequest request,
             HttpServletResponse response) {
         try {
@@ -86,25 +102,28 @@ public class LotteryController {
             LotteryUserInfo userInfo = session
                     .getAttribute(Constants.LOGIN_TAG) != null ? (LotteryUserInfo) session
                     .getAttribute(Constants.LOGIN_TAG) : null;
-            if (userInfo != null) {
+//            if (userInfo != null) {
                 String app_id = request.getParameter("id");
-
-                String appVersion = request.getParameter("appVersion");
-                boolean isFirst = true; // 是否为断点续传
-                String patch = request.getParameter("patch");
+//
+//                String appVersion = request.getParameter("appVersion");
+//                boolean isFirst = true; // 是否为断点续传
+//                String patch = request.getParameter("patch");
 
                 // 添加下载记录
                 LotteryDownloadRecord record = new LotteryDownloadRecord();
                 record.setAppId(app_id);
-                record.setUserId(userInfo.getId());
+                if(userInfo != null){
+                    record.setUserId(userInfo.getId());
+                }
                 lotteryServiceImpl.addLotteryDownloadRecord(record);
 
-                String filePath = iAppInfoService.getApkFilePath(app_id,
-                        appVersion, isFirst, "local", patch);
-                response.sendRedirect(filePath);
-            } else {
-                return "redirect:" + Constants.LOGIN_URL;
-            }
+//                String filePath = iAppInfoService.getApkFilePath(app_id,
+//                        appVersion, isFirst, "local", patch);
+                response.sendRedirect(appstore+app_id);
+//            } 
+//            else {
+//                return "redirect:" + Constants.LOGIN_URL;
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,8 +137,8 @@ public class LotteryController {
             String code = request.getParameter("code");
             String openid = request.getParameter("openid");
             String openkey = request.getParameter("openkey");
-            String client_id = "4";
-            String client_secret = "123456";
+            String client_id = Constants.CLIENT_ID;
+            String client_secret = Constants.CLIENT_SECRET;
 
             UserCenterInfo info = new UserCenterInfo(code, openid, openkey,
                     client_id, client_secret);

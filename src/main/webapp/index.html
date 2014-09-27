@@ -9,7 +9,7 @@
 <script type="text/javascript" src="../style/jquery.js"></script>
 <script type="text/javascript" src="../style/rotate.js"></script>
 <script type="text/javascript" src="../style/index.js"></script>
-<script type="text/javascript" src="../style/lottery.js"></script>
+
 
 </head>
 <body>
@@ -22,7 +22,6 @@
                 <div class="roll-box">
                     <!-- 中奖信息滚播 -->
                     <ul>
-                       <!--  
                         <li>
                             <span id="user-name">vivo2014</span>获得<span class="prize">京东50元充值卡</span>
                         </li>
@@ -35,7 +34,6 @@
                         <li>
                             <span id="user-name">vhdsjd</span>获得<span class="prize">优惠券</span>
                         </li>
-                         -->
                     </ul>
                 </div>
                 <div class="examine">查看我的奖品</div>
@@ -44,8 +42,8 @@
                 <img src="../images/big-rotate.png" alt="" id="lotteryBtn">
                 <div class="small-box"><img src="../images/small-rotate2.png" alt=""></div>
             </div>
-            <div class="draw">点击抽奖</div>  
-            <div class="count">抽奖机会：<span id="count-time"></span>次</div> 
+            <div class="draw">登录抽奖</div>  
+            <div class="count">抽奖机会：<span id="count-time">3</span>次</div> 
             <div class="rule-title">活动规则</div>
             <div class="rule-main">
                 <p>1.登录vivo账号，即可参与抽奖，每人每天最多可抽奖3次</p>
@@ -155,10 +153,70 @@
 
 
     <!-- 遮罩层 -->
-    <!-- <div id="fade" class="black_overlay"></div> -->
+    <div id="fade" class="black_overlay"></div>
 
-    <!-- 弹窗 兑奖规则-->
- <!--    <div id="ticket-rules" class="popup">
+
+
+<!-- ---------------------------------------------------------------------------- -->
+
+
+    <!-- 2弹窗 抽中奖-->
+    <div id="win-prize" class="popup">
+        <div class="get-prize">恭喜你抽中啦！
+            <span class="close-bt">
+                <img src="../images/close-bt.png" alt="">
+            </span>
+        </div>
+        <div class="popup-main">
+            <div class="prize-bg">
+                <!-- <div class="prize-word a1-word">京东500元电子购物卡</div> -->
+                <div class="prize-word a2-word">vivo xshot手机</div>
+            </div>
+            <div class="center sncode-h">
+                兑换码：<span id="sncode">21385828703</span>  
+            </div>
+            <div class="contact-mail">如需帮助请联系我们的客服：appstore@vivo.com.cn</div>
+        </div>
+        <div class="sub-bg" >
+            <div class="i-know see-rules">查看兑换方式</div>   
+        </div>
+    </div>
+
+<!-- ----------------------------------------------------------------------------- -->
+
+    <!-- 3弹窗 奖品列表-->
+    <div id="prizes-li" class="popup">
+        <div class="pop-tile">我的奖品列表
+            <span class="close-bt">
+                <img src="../images/close-bt.png" alt="">
+            </span>
+        </div>
+        <div class="popup-main" >
+            <div class="line-out">
+                <div class="date-main">2014-10-1</div>
+                <div class="prize-news"> 
+                    <span class="">20元购物券</span>
+                    兑换码<span>2188888888</span>
+                </div>
+                <div class="check-rule">查看兑换方式</div>
+            </div>
+            <div class="line-out">
+                <div class="date-main">2014-10-30</div>
+                <div class="prize-news"> 
+                    <span class="">20元购物券</span>
+                    兑换码<span>2188888888</span>
+                </div>
+                <div class="check-rule">查看兑换方式</div>
+            </div>
+        </div>
+        <div class="sub-bg" >
+            <div class="i-know ensure">我知道了</div>   
+        </div>
+    </div> 
+<!-- ------------------------------------------------------------------------------------------- -->
+
+    <!-- 4弹窗 兑奖规则-->
+    <div id="ticket-rules" class="popup">
         <div class="pop-tile">兑奖规则
             <span class="close-bt">
                 <img src="../images/close-bt.png" alt="">
@@ -180,25 +238,53 @@
             </div>
         </div>
         <div class="sub-bg" >
-            <div class="i-know">我知道了 </div>   
+            <div class="i-know ensure">我知道了</div>   
         </div>
     </div>
-     -->
-    <!-- 弹窗 获奖信息-->
-<!--     <div id="ticket-rules" class="popup">
-        <div class="pop-tile">兑奖规则
-            <span class="close-bt">
-                <img src="../images/close-bt.png" alt="">
-            </span>
-        </div>
+    
+
+  <!-- ---------------------------------------------------------------------------- -->
+
+    <!-- 5弹窗 没中奖-->
+    <div id="not-prize" class="popup">
         <div class="popup-main">
-            
+            <div class="recur">手气不行，洗洗手再来！</div>
+            <div class="download-chan">下载本页面的APP,中奖机会更大哦！</div>
         </div>
         <div class="sub-bg" >
-            <div class="i-know">我知道了 </div>   
+            <div class="i-know ensure">确 定</div>   
         </div>
-    </div -->
+    </div>
+<!-- ---------------------------------------------------------------------------- -->
+
+    <!-- 6弹窗 查看获奖信息-->
+    <div id="" class="popup">
+        <div class="popup-main">
+            <div class="center noe-prize">
+                空空如也，暂无获奖信息！
+            </div>
+        </div>
+        <div class="sub-bg" >
+            <div class="i-know ensure">确 定</div>   
+        </div>
+    </div>
     
+<!-- ---------------------------------------------------------------------------- -->
+
+    <!-- 7弹窗 抽奖次数-->
+    <div id="three-chance" class="popup">
+        <div class="popup-main">
+            <div class="center noe-prize">
+                您今天的抽奖机会已用完啦！
+            </div>
+        </div>
+        <div class="sub-bg" >
+            <div class="i-know ensure">明天再来</div>   
+        </div>
+    </div>
+
+
+  
 
 </body>
 </html>

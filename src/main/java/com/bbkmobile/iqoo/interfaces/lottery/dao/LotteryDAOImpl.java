@@ -1,5 +1,8 @@
 package com.bbkmobile.iqoo.interfaces.lottery.dao;  
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +23,7 @@ public class LotteryDAOImpl implements LotteryDAO{
 
     @Resource
     private SqlSession session;
-    
+
     @Override
     public List<LotteryRecord> list() throws Exception {
         return session.selectList("lotteryMapper.selectLotteryRecords");
@@ -52,12 +55,31 @@ public class LotteryDAOImpl implements LotteryDAO{
     }
     @Override
     public int countClickTimesByUserId(String userId) throws Exception{
-     return session.selectOne("lotteryMapper.countClickTimesByUserId",userId);
+        DateFormat df = new SimpleDateFormat("MMdd");
+        String logPost = df.format(new Date());
+        
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("tableName", "t_lottery_click_"+logPost);
+        params.put("userId", "'"+userId+"'");
+        
+     return session.selectOne("lotteryMapper.countClickTimesByUserId",params);
     }
 
     @Override
     public void addClickRecords(LotteryClickRecord records) throws Exception {
-        session.insert("lotteryMapper.addclickRecords", records);
+        
+        DateFormat df = new SimpleDateFormat("MMdd");
+        String logPost = df.format(new Date());
+        
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("tableName", "t_lottery_click_"+logPost);
+        params.put("userId", "'"+records.getUserId()+"'");
+        if(records.getGrade() != null && !"".equals(records.getGrade().trim())){
+            params.put("grade", "'"+records.getGrade()+"'");
+        }else{
+            params.put("grade", "'0'");
+        }
+        session.insert("lotteryMapper.addclickRecords", params);
     }
 
     @Override

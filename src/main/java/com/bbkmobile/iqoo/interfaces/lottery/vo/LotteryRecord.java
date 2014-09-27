@@ -23,7 +23,9 @@ public class LotteryRecord {
     private Integer lottery_grade;// 几等奖
     
     private Integer lastCount;
-
+    private String changeDate;
+    private String changeRule;
+    
     public Integer getId() {
         return id;
     }
@@ -70,5 +72,21 @@ public class LotteryRecord {
 
     public void setLastCount(Integer lastCount) {
         this.lastCount = lastCount;
+    }
+
+    public String getChangeDate() {
+        return changeDate;
+    }
+
+    public void setChangeDate(String changeDate) {
+        this.changeDate = changeDate;
+    }
+
+    public String getChangeRule() {
+        return changeRule;
+    }
+
+    public void setChangeRule(String changeRule) {
+        this.changeRule = changeRule;
     }
 }

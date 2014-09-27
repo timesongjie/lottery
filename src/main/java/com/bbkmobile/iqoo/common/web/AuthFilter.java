@@ -73,6 +73,9 @@ public class AuthFilter implements Filter {
                 || reqURL.endsWith(".png")
                 || reqURL.endsWith("/doLogin")
                 || reqURL.endsWith("/index")
+                || reqURL.contains("/home")
+                || reqURL.contains("/download")
+                || reqURL.contains("/records")
                 ) {
             return Boolean.TRUE;
         }
